@@ -6,7 +6,7 @@ const tripSchema = new Schema(
     name: { type: String, required: true },
     description: { type: String },
     destination: { type: String, required: true, maxlength: 15 },
-    categoria: { type: String, enum: ["familiar", "amigos", "trabajo"] },
+    category: { type: String, enum: ["familiar", "amigos", "trabajo"] },
     start_date: { type: Date, required: true },
     end_date: { type: Date },
   },
