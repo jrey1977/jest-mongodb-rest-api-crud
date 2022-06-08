@@ -67,4 +67,42 @@ describe("Pruebas sobre la api de trips", () => {
       expect(response.body.error).toBeDefined;
     });
   });
+
+  describe("PUT /api/trips", () => {
+
+    let trip;
+    
+    beforeEach( async()=>{
+        trip = await Trip.create({
+          name: 'Vieja de vuelta',
+          destination: 'Berlín',
+          category: 'amigos',
+          start_date: '2022-06-06'
+        });
+    });
+
+    afterEach( async()=>{
+      await Trip.findByIdAndDelete(trip._id)
+    });
+
+    it('La ruta funciona', async()=>{
+        const response = await request(app).put(`/api/trips/${trip._id}`).send({
+          name: 'Nombre cambiado'
+        });
+
+        expect(response.status).toBe(200);
+        expect(response.headers['content-type']).toContain('json');
+    })
+
+    it('Se actualiza correctamente', async()=>{
+      const response = await request(app).put(`/api/trips/${trip._id}`).send({
+        name: 'Nombre cambiado'
+      });
+
+      expect(response.body._id).toBeDefined();
+      expect(response.body.name).toBe('Nombre cambiado');
+    });
+
+  });
+
 });

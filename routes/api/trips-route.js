@@ -21,4 +21,17 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:tripId", async(req,res) => {
+  try {
+    const tripEdit = await Trip.findByIdAndUpdate(
+      req.params.tripId,
+      req.body,
+      {new:true}
+    )
+    res.json(tripEdit);
+  } catch (error) {
+    res.status(500).json({ error: "Ha ocurrido un error" });
+  }
+});
+
 module.exports = router;
